@@ -1,0 +1,40 @@
+<Meta>
+  <title>No Tent Restrictions</title>
+  <id>omegaplatinum.elin.notentrestrictions</id>
+  <author>OmegaPlatinum</author>
+  <loadPriority>100</loadPriority>
+  <description>
+    Removes restrictions from tents.
+    テントの制限を解除します。
+
+    [h1] Features [/h1]
+    [list]
+    [*] Allows tents to be placed inside other tents.
+    [*] Enables the use of storage chests inside tents.
+    [*] Allows delivery boxes to function inside tents.
+    [*] Enables the use of shipping chests inside tents.
+    [*] Increase fertility to 99999 inside tents.
+    [/list]
+
+    [h1] Compatibility [/h1]
+    This mod works with existing save files.
+
+    Supports Game Version: 0.23.74.
+
+    [h1] 特徴 [/h1]
+    [list]
+    [*] テント内に他のテントを設置可能。
+    [*] テント内で収納箱を使用可能。
+    [*] テント内で宅配ボックスを機能させることが可能。
+    [*] テント内で出荷箱を使用可能。
+    [*] テント内の肥沃度を 99999 に増加させます。
+    [/list]
+
+    [h1] 互換性 [/h1]
+    このMODは既存のセーブデータと完全に互換性があり、新しいプレイスルーは不要です。
+    対応ゲームバージョン: 0.23.74
+  </description>
+  <tags>General,Balance</tags>
+  <visibility>Public</visibility>
+  <version>0.23.74</version>
+</Meta>
