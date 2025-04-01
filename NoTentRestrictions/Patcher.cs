@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NoTentRestrictions.Patches;
 using HarmonyLib;
 
@@ -45,6 +46,13 @@ namespace NoTentRestrictions
         public static bool TraitShippingChestCanOpenContainer(TraitShippingChest __instance, ref bool __result)
         {
             return TraitShippingChestPatch.CanOpenContainerPrefix(__instance: __instance, __result: ref __result);
+        }
+        
+        [HarmonyTranspiler]
+        [HarmonyPatch(declaringType: typeof(HotItemHeld), methodName: nameof(HotItemHeld.TrySetAct))]
+        internal static IEnumerable<CodeInstruction> HotItemHeldTrySetActTranspiler(IEnumerable<CodeInstruction> instructions)
+        {
+            return HotItemHeldPatch.TrySetActTranspiler(instructions: instructions);
         }
     }
 }
