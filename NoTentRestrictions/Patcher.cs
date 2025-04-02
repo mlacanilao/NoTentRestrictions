@@ -54,5 +54,12 @@ namespace NoTentRestrictions
         {
             return HotItemHeldPatch.TrySetActTranspiler(instructions: instructions);
         }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(declaringType: typeof(Spatial), methodName: nameof(Spatial.isExternalZone), methodType: MethodType.Getter)]
+        public static bool SpatialisExternalZone(Spatial __instance, ref bool __result)
+        {
+            return SpatialPatch.isExternalZonePrefix(__instance: __instance, __result: ref __result);
+        }
     }
 }
