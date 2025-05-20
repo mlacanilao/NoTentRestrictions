@@ -8,6 +8,13 @@ namespace NoTentRestrictions.Patches
     {
         internal static IEnumerable<CodeInstruction> TrySetActTranspiler(IEnumerable<CodeInstruction> instructions)
         {
+            bool enablePlaceTent = NoTentRestrictionsConfig.EnablePlaceTent?.Value ?? true;
+            
+            if (enablePlaceTent == false)
+            {
+                return instructions;
+            }
+            
             var codeMatcher = new CodeMatcher(instructions: instructions);
             
             codeMatcher.MatchStartForward(matches: new[]

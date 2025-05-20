@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ConfigLayoutSchema.xsd">
+    <hlayout id="hlayout01">
+        <vlayout id="vlayout01" border="true">
+            <title>title01</title>
+            
+            <toggle id="enablePlaceTentToggle">
+                <contentId>toggle01</contentId>
+                <tooltip>tooltip01</tooltip>
+            </toggle>
+
+            <toggle id="enableStorageChestToggle">
+                <contentId>toggle02</contentId>
+                <tooltip>tooltip02</tooltip>
+            </toggle>
+
+            <toggle id="enableDeliveryBoxToggle">
+                <contentId>toggle03</contentId>
+                <tooltip>tooltip03</tooltip>
+            </toggle>
+
+            <toggle id="enableShippingChestToggle">
+                <contentId>toggle04</contentId>
+                <tooltip>tooltip04</tooltip>
+            </toggle>
+
+            <toggle id="enableMaxElectricityToggle">
+                <contentId>toggle07</contentId>
+                <tooltip>tooltip07</tooltip>
+            </toggle>
+        </vlayout>
+
+        <vlayout id="vlayout02" border="true">
+            <title>title02</title>
+
+            <toggle id="enableMaxFertilityToggle">
+                <contentId>toggle05</contentId>
+                <tooltip>tooltip05</tooltip>
+            </toggle>
+
+            <toggle id="enableNoSoilUpgradeLimitToggle">
+                <contentId>toggle06</contentId>
+                <tooltip>tooltip06</tooltip>
+            </toggle>
+        </vlayout>
+    </hlayout>
+</config>

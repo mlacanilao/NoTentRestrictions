@@ -13,11 +13,25 @@ namespace NoTentRestrictions
             return Zone_TentPatch.MaxSoilPrefix(__result: ref __result);
         }
         
+        [HarmonyTranspiler]
+        [HarmonyPatch(declaringType: typeof(TraitWrench), methodName: nameof(TraitWrench.IsValidTarget))]
+        internal static IEnumerable<CodeInstruction> TraitWrenchIsValidTarget(IEnumerable<CodeInstruction> instructions)
+        {
+            return TraitWrenchPatch.IsValidTargetTranspiler(instructions: instructions);
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(declaringType: typeof(Zone), methodName: nameof(Zone.BaseElectricity), methodType: MethodType.Getter)]
+        public static bool ZoneBaseElectricity(ref int __result)
+        {
+            return ZonePatch.BaseElectricityPrefix(__result: ref __result);
+        }
+        
         [HarmonyPrefix]
         [HarmonyPatch(declaringType: typeof(Zone_Tent), methodName: nameof(Zone_Tent.AllowNewZone), methodType: MethodType.Getter)]
         public static bool Zone_TentAllowNewZone(ref bool __result)
         {
-            return Zone_TentPatch.AllowNewZonePrefix(ref __result);
+            return Zone_TentPatch.AllowNewZonePrefix(__result: ref __result);
         }
         
         [HarmonyPrefix]
@@ -39,6 +53,13 @@ namespace NoTentRestrictions
         public static bool TraitMagicChestCanOpenContainer(TraitMagicChest __instance, ref bool __result)
         {
             return TraitMagicChestPatch.CanOpenContainerPrefix(__instance: __instance, __result: ref __result);
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(declaringType: typeof(TraitMagicChest), methodName: nameof(TraitMagicChest.CanSearchContent), methodType: MethodType.Getter)]
+        public static bool TraitMagicChestCanSearchContent(TraitMagicChest __instance, ref bool __result)
+        {
+            return TraitMagicChestPatch.CanSearchContentPrefix(__instance: __instance, __result: ref __result);
         }
         
         [HarmonyPrefix]

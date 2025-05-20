@@ -4,6 +4,13 @@ namespace NoTentRestrictions.Patches
     {
         public static bool MaxSoilPrefix(ref int __result)
         {
+            bool enableMaxFertility = NoTentRestrictionsConfig.EnableMaxFertility?.Value ?? true;
+            
+            if (enableMaxFertility == false)
+            {
+                return true;
+            }
+            
             if (EClass.core?.IsGameStarted == false ||
                 EClass._zone is Zone_Tent == false)
             {
@@ -16,6 +23,13 @@ namespace NoTentRestrictions.Patches
         
         public static bool AllowNewZonePrefix(ref bool __result)
         {
+            bool enablePlaceTent = NoTentRestrictionsConfig.EnablePlaceTent?.Value ?? true;
+            
+            if (enablePlaceTent == false)
+            {
+                return true;
+            }
+            
             if (EClass.core?.IsGameStarted == false ||
                 EClass._zone is Zone_Tent == false)
             {
