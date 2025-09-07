@@ -10,7 +10,7 @@ namespace NoTentRestrictions
     {
         internal const string Guid = "omegaplatinum.elin.notentrestrictions";
         internal const string Name = "No Tent Restrictions";
-        internal const string Version = "2.0.0.0";
+        internal const string Version = "2.1.0.0";
         internal const string ModOptionsGuid = "evilmask.elinplugins.modoptions";
         internal const string ModOptionsAssemblyName = "ModOptions";
     }
@@ -57,7 +57,7 @@ namespace NoTentRestrictions
             {
                 return AppDomain.CurrentDomain
                     .GetAssemblies()
-                    .Any(predicate: assembly => assembly.GetName().Name == ModInfo.ModOptionsAssemblyName);
+                    .Any(predicate: (Assembly assembly) => assembly.GetName().Name == ModInfo.ModOptionsAssemblyName);
             }
             catch (Exception ex)
             {

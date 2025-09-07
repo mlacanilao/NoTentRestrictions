@@ -17,6 +17,10 @@
     [*] Increases fertility to 99999 inside tents.
     [*] Removes the soil upgrade limit for tent wrenches.
     [*] Increases electricity to 99999 inside tents.
+    [*] Allows Land Expansion through the [b]Config[/b] menu.
+    [*] Enables Zone Investment through the [b]Config[/b] menu.
+    [*] Allows Temporary Merchant Recruitment through the [b]Config[/b] menu.
+    [*] Experimental: Manage Land Traits from the [b]Config[/b] menu.
     [/list]
 
     [h1] Compatibility [/h1]
@@ -28,7 +32,7 @@
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341]https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341[/url]
     [/list]
 
-    Supports Game Version: 0.23.152
+    Supports Game Version: 0.23.188
 
     [h1] 特徴 [/h1]
     [list]
@@ -39,6 +43,10 @@
     [*] テント内の肥沃度を 99999 に増加させます。
     [*] テント用レンチの土壌アップグレード制限を解除します。
     [*] テント内の電力を 99999 に増加させます。
+    [*] [b]Config[/b] メニューから「土地拡張」を実行可能。
+    [*] [b]Config[/b] メニューから「ゾーン投資」を実行可能。
+    [*] [b]Config[/b] メニューから「臨時商人の雇用」を実行可能。
+    [*] 【実験的】[b]Config[/b] メニューから「土地の特徴の管理」を実行可能。
     [/list]
 
     [h1] 互換性 [/h1]
@@ -50,9 +58,9 @@
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341]https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341[/url]
     [/list]
     
-    対応ゲームバージョン: 0.23.152
+    対応ゲームバージョン: 0.23.188
   </description>
   <tags>General,Balance</tags>
   <visibility>Public</visibility>
-  <version>0.23.152</version>
+  <version>0.23.188</version>
 </Meta>

@@ -44,4 +44,72 @@
             </toggle>
         </vlayout>
     </hlayout>
+    
+    <hlayout id="hlayout02">
+        <vlayout id="vlayout03" border="true">
+            <title>title03</title>
+
+            <topic id="topic06">topic06</topic>
+            <topic id="topic01">topic01</topic>
+            <button id = "button01">
+                <contentId>button01</contentId>
+                <tooltip>tooltip08</tooltip>
+            </button>
+        </vlayout>
+
+        <vlayout id="vlayout04" border="true">
+            <title>title04</title>
+
+            <topic id="topic07">topic07</topic>
+            <topic id="topic02">topic02</topic>
+            <button id = "button02">
+                <contentId>button02</contentId>
+                <tooltip>tooltip09</tooltip>
+            </button>
+        </vlayout>
+    </hlayout>
+
+    <hlayout id="hlayout03">
+        <vlayout id="vlayout05" border="true">
+            <title>title05</title>
+            
+            <topic id="topic03">topic03</topic>
+            <one_choice id="dropdown01" type="dropdown" value="0">
+                <choice>
+                    <contentId>item01</contentId>
+                </choice>
+            </one_choice>
+            <button id = "button03">
+                <contentId>button03</contentId>
+                <tooltip>tooltip10</tooltip>
+            </button>
+        </vlayout>
+
+        <vlayout id="vlayout06" border="true">
+            <title>title06</title>
+            
+            <topic id="topic04">topic04</topic>
+            <topic id="topic05">topic05</topic>
+            <one_choice id="dropdown02" type="dropdown" value="0">
+                <choice>
+                    <contentId>item02</contentId>
+                </choice>
+            </one_choice>
+            <one_choice id="dropdown03" type="dropdown" value="0">
+                <choice>
+                    <contentId>item03</contentId>
+                </choice>
+            </one_choice>
+            <one_choice id="dropdown04" type="dropdown" value="0">
+                <choice>
+                    <contentId>item04</contentId>
+                </choice>
+            </one_choice>
+
+            <button id = "button04">
+                <contentId>button04</contentId>
+                <tooltip>tooltip11</tooltip>
+            </button>
+        </vlayout>
+    </hlayout>
 </config>
