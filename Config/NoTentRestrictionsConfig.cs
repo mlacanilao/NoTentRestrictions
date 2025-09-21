@@ -12,6 +12,7 @@ namespace NoTentRestrictions
         internal static ConfigEntry<bool> EnableMaxFertility;
         internal static ConfigEntry<bool> EnableNoSoilUpgradeLimit;
         internal static ConfigEntry<bool> EnableMaxElectricity;
+        internal static ConfigEntry<bool> EnableTeleporter;
         
         public static string XmlPath { get; private set; }
         public static string TranslationXlsxPath { get; private set; }
@@ -107,6 +108,19 @@ namespace NoTentRestrictions
                 "'true' に設定すると電力を99999に増加し、'false' に設定するとデフォルトのままになります。\n" +
                 "启用或禁用帐篷内的最大电力（99999）。\n" +
                 "设置为 'true' 将电力提高至 99999，设置为 'false' 保持默认值。"
+            );
+            
+            EnableTeleporter = config.Bind(
+                section: ModInfo.Name,
+                key: "Enable Teleporter",
+                defaultValue: true,
+                description:
+                "Enable or disable the use of teleporters inside tents.\n" +
+                "Set to 'true' to allow teleporter devices to work inside tents, or 'false' to keep them blocked.\n" +
+                "テント内で「テレポーター」を使用できるかを有効または無効にします。\n" +
+                "'true' に設定するとテント内でもテレポーターが機能し、'false' に設定すると使用できません。\n" +
+                "启用或禁用帐篷内使用传送装置（Teleporter）。\n" +
+                "设置为 'true' 允许在帐篷内使用，设置为 'false' 禁止使用。"
             );
         }
         

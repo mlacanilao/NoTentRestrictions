@@ -10,7 +10,7 @@ namespace NoTentRestrictions
     {
         internal const string Guid = "omegaplatinum.elin.notentrestrictions";
         internal const string Name = "No Tent Restrictions";
-        internal const string Version = "2.1.0.0";
+        internal const string Version = "2.2.0.0";
         internal const string ModOptionsGuid = "evilmask.elinplugins.modoptions";
         internal const string ModOptionsAssemblyName = "ModOptions";
     }

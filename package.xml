@@ -14,6 +14,7 @@
     [*] Enables the use of storage chests inside tents.
     [*] Allows delivery boxes to function inside tents.
     [*] Enables the use of shipping chests inside tents.
+    [*] Enables the use of teleporters inside tents.
     [*] Increases fertility to 99999 inside tents.
     [*] Removes the soil upgrade limit for tent wrenches.
     [*] Increases electricity to 99999 inside tents.
@@ -32,7 +33,7 @@
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341]https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341[/url]
     [/list]
 
-    Supports Game Version: 0.23.188
+    Supports Game Version: 0.23.200
 
     [h1] 特徴 [/h1]
     [list]
@@ -40,6 +41,7 @@
     [*] テント内で収納箱を使用可能。
     [*] テント内で宅配ボックスを機能させることが可能。
     [*] テント内で出荷箱を使用可能。
+    [*] テント内で「テレポーター」を使用可能。
     [*] テント内の肥沃度を 99999 に増加させます。
     [*] テント用レンチの土壌アップグレード制限を解除します。
     [*] テント内の電力を 99999 に増加させます。
@@ -58,9 +60,9 @@
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341]https://steamcommunity.com/sharedfiles/filedetails/?id=3381182341[/url]
     [/list]
     
-    対応ゲームバージョン: 0.23.188
+    対応ゲームバージョン: 0.23.200
   </description>
   <tags>General,Balance</tags>
   <visibility>Public</visibility>
-  <version>0.23.188</version>
+  <version>0.23.200</version>
 </Meta>

@@ -28,6 +28,11 @@
                 <contentId>toggle07</contentId>
                 <tooltip>tooltip07</tooltip>
             </toggle>
+
+            <toggle id="enableTeleporter">
+                <contentId>toggle08</contentId>
+                <tooltip>tooltip12</tooltip>
+            </toggle>
         </vlayout>
 
         <vlayout id="vlayout02" border="true">

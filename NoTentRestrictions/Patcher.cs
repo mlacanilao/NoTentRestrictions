@@ -82,5 +82,12 @@ namespace NoTentRestrictions
         {
             return SpatialPatch.isExternalZonePrefix(__instance: __instance, __result: ref __result);
         }
+        
+        [HarmonyTranspiler]
+        [HarmonyPatch(declaringType: typeof(TraitTeleporter), methodName: nameof(TraitTeleporter.TryTeleport))]
+        internal static IEnumerable<CodeInstruction> TraitTeleporterTryTeleport(IEnumerable<CodeInstruction> instructions)
+        {
+            return TraitTeleporterPatch.TryTeleportTranspiler(instructions: instructions);
+        }
     }
 }

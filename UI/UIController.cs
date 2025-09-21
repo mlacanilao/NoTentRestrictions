@@ -87,6 +87,13 @@ namespace NoTentRestrictions
                     NoTentRestrictionsConfig.EnableMaxElectricity.Value = isChecked;
                 };
                 
+                var enableTeleporter = builder.GetPreBuild<OptToggle>(id: "enableTeleporter");
+                enableTeleporter.Checked = NoTentRestrictionsConfig.EnableTeleporter.Value;
+                enableTeleporter.OnValueChanged += (bool isChecked) =>
+                {
+                    NoTentRestrictionsConfig.EnableTeleporter.Value = isChecked;
+                };
+                
                 var enableMaxFertilityToggle = builder.GetPreBuild<OptToggle>(id: "enableMaxFertilityToggle");
                 enableMaxFertilityToggle.Checked = NoTentRestrictionsConfig.EnableMaxFertility.Value;
                 enableMaxFertilityToggle.OnValueChanged += (bool isChecked) =>
