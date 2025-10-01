@@ -310,7 +310,9 @@ namespace NoTentRestrictions
                                 SE.Pay();
                                 EClass.pc.ModCurrency(a: -charaCost, id: "money2");
                                 Point point = EClass.pc.pos.GetNearestPoint(allowChara: false);
-                                EClass._zone.AddCard(t: chara, point: point);
+                                chara.homeZone = EClass._zone;
+                                chara.isImported = true;
+                                EClass._zone?.AddCard(t: chara, point: point);
                                 SE.Play(id: "good");
                                 topic03.Text = $"{goldBarTitle}: {EClass.pc.GetCurrency(id: "money2")} {goldBarPlural}";
                                 Dialog.Ok(langDetail: "hire".langGame(ref1: chara.Name));

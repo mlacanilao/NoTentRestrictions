@@ -28,6 +28,20 @@ namespace NoTentRestrictions
         }
         
         [HarmonyPrefix]
+        [HarmonyPatch(declaringType: typeof(Zone), methodName: nameof(Zone.AllowInvest), methodType: MethodType.Getter)]
+        public static bool ZoneAllowInvest(ref bool __result)
+        {
+            return ZonePatch.AllowInvestPrefix(__result: ref __result);
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(declaringType: typeof(Zone), methodName: nameof(Zone.ShouldAutoRevive), methodType: MethodType.Getter)]
+        public static bool ZoneShouldAutoRevive(ref bool __result)
+        {
+            return ZonePatch.ShouldAutoRevivePrefix(__result: ref __result);
+        }
+        
+        [HarmonyPrefix]
         [HarmonyPatch(declaringType: typeof(Zone_Tent), methodName: nameof(Zone_Tent.AllowNewZone), methodType: MethodType.Getter)]
         public static bool Zone_TentAllowNewZone(ref bool __result)
         {

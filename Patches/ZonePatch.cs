@@ -20,5 +20,29 @@ namespace NoTentRestrictions.Patches
             __result = 99999;
             return false;
         }
+        
+        public static bool AllowInvestPrefix(ref bool __result)
+        {
+            if (EClass.core?.IsGameStarted == false ||
+                EClass._zone is Zone_Tent == false)
+            {
+                return true;
+            }
+
+            __result = true;
+            return false;
+        }
+        
+        public static bool ShouldAutoRevivePrefix(ref bool __result)
+        {
+            if (EClass.core?.IsGameStarted == false ||
+                EClass._zone is Zone_Tent == false)
+            {
+                return true;
+            }
+
+            __result = true;
+            return false;
+        }
     }
 }
