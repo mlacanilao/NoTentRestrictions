@@ -15,6 +15,7 @@
     [*] Allows delivery boxes to function inside tents.
     [*] Enables the use of shipping chests inside tents.
     [*] Enables the use of teleporters inside tents.
+    [*] Enables dining spot sign effects inside tents.
     [*] Increases fertility to 99999 inside tents.
     [*] Removes the soil upgrade limit for tent wrenches.
     [*] Increases electricity to 99999 inside tents.
@@ -42,6 +43,7 @@
     [*] テント内で宅配ボックスを機能させることが可能。
     [*] テント内で出荷箱を使用可能。
     [*] テント内で「テレポーター」を使用可能。
+    [*] テント内で「食堂の立て札」の効果を有効化。
     [*] テント内の肥沃度を 99999 に増加させます。
     [*] テント用レンチの土壌アップグレード制限を解除します。
     [*] テント内の電力を 99999 に増加させます。

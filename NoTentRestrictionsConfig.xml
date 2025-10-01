@@ -29,9 +29,14 @@
                 <tooltip>tooltip07</tooltip>
             </toggle>
 
-            <toggle id="enableTeleporter">
+            <toggle id="enableTeleporterToggle">
                 <contentId>toggle08</contentId>
                 <tooltip>tooltip12</tooltip>
+            </toggle>
+
+            <toggle id="enableDiningSpotSignToggle">
+                <contentId>toggle09</contentId>
+                <tooltip>tooltip13</tooltip>
             </toggle>
         </vlayout>
 

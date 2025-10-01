@@ -13,6 +13,7 @@ namespace NoTentRestrictions
         internal static ConfigEntry<bool> EnableNoSoilUpgradeLimit;
         internal static ConfigEntry<bool> EnableMaxElectricity;
         internal static ConfigEntry<bool> EnableTeleporter;
+        internal static ConfigEntry<bool> EnableDiningSpotSign;
         
         public static string XmlPath { get; private set; }
         public static string TranslationXlsxPath { get; private set; }
@@ -121,6 +122,19 @@ namespace NoTentRestrictions
                 "'true' に設定するとテント内でもテレポーターが機能し、'false' に設定すると使用できません。\n" +
                 "启用或禁用帐篷内使用传送装置（Teleporter）。\n" +
                 "设置为 'true' 允许在帐篷内使用，设置为 'false' 禁止使用。"
+            );
+            
+            EnableDiningSpotSign = config.Bind(
+                section: ModInfo.Name,
+                key: "Enable Dining Spot Sign",
+                defaultValue: true,
+                description:
+                "Enable or disable dining spot sign effects inside tents.\n" +
+                "Set to 'true' to apply dining bonuses in tents, or 'false' to keep vanilla behavior.\n" +
+                "テント内で食堂の立て札の効果を有効または無効にします。\n" +
+                "'true' に設定するとテント内でも食堂の立て札の効果が適用され、'false' に設定するとバニラ仕様のままになります。\n" +
+                "启用或禁用帐篷内的食堂招牌效果。\n" +
+                "设置为 'true' 在帐篷内也应用加成，设置为 'false' 保持原版行为。"
             );
         }
         

@@ -103,5 +103,12 @@ namespace NoTentRestrictions
         {
             return TraitTeleporterPatch.TryTeleportTranspiler(instructions: instructions);
         }
+        
+        [HarmonyTranspiler]
+        [HarmonyPatch(declaringType: typeof(FoodEffect), methodName: nameof(FoodEffect.Proc))]
+        internal static IEnumerable<CodeInstruction> FoodEffectProc(IEnumerable<CodeInstruction> instructions)
+        {
+            return FoodEffectPatch.ProcTranspiler(instructions: instructions);
+        }
     }
 }

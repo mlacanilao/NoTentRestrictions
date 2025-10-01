@@ -87,9 +87,9 @@ namespace NoTentRestrictions
                     NoTentRestrictionsConfig.EnableMaxElectricity.Value = isChecked;
                 };
                 
-                var enableTeleporter = builder.GetPreBuild<OptToggle>(id: "enableTeleporter");
-                enableTeleporter.Checked = NoTentRestrictionsConfig.EnableTeleporter.Value;
-                enableTeleporter.OnValueChanged += (bool isChecked) =>
+                var enableTeleporterToggle = builder.GetPreBuild<OptToggle>(id: "enableTeleporterToggle");
+                enableTeleporterToggle.Checked = NoTentRestrictionsConfig.EnableTeleporter.Value;
+                enableTeleporterToggle.OnValueChanged += (bool isChecked) =>
                 {
                     NoTentRestrictionsConfig.EnableTeleporter.Value = isChecked;
                 };
@@ -106,6 +106,13 @@ namespace NoTentRestrictions
                 enableNoSoilUpgradeLimitToggle.OnValueChanged += (bool isChecked) =>
                 {
                     NoTentRestrictionsConfig.EnableNoSoilUpgradeLimit.Value = isChecked;
+                };
+                
+                var enableDiningSpotSignToggle = builder.GetPreBuild<OptToggle>(id: "enableDiningSpotSignToggle");
+                enableDiningSpotSignToggle.Checked = NoTentRestrictionsConfig.EnableDiningSpotSign.Value;
+                enableDiningSpotSignToggle.OnValueChanged += (bool isChecked) =>
+                {
+                    NoTentRestrictionsConfig.EnableDiningSpotSign.Value = isChecked;
                 };
                 
                 var topic06 = builder.GetPreBuild<OptTopic>(id: "topic06");
