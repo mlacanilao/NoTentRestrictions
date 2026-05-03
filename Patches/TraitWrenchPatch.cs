@@ -1,41 +1,67 @@
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace NoTentRestrictions.Patches
-{
-    public static class TraitWrenchPatch
-    {
-        internal static IEnumerable<CodeInstruction> IsValidTargetTranspiler(IEnumerable<CodeInstruction> instructions)
-        {
-            bool enableNoSoilUpgradeLimit = NoTentRestrictionsConfig.EnableNoSoilUpgradeLimit?.Value ?? false;
-            
-            if (enableNoSoilUpgradeLimit == false)
-            {
-                return instructions;
-            }
-            
-            var codeMatcher = new CodeMatcher(instructions: instructions);
-            
-            codeMatcher.MatchStartForward(matches: new[]
-            {
-                new CodeMatch(opcode: OpCodes.Ldloc_0),                                   // ldloc.0         (load local variable 0 — the Zone object)
-                new CodeMatch(opcode: OpCodes.Ldc_I4, operand: 2200),                     // ldc.i4 2200     (push constant 2200 — the element ID)
-                new CodeMatch(opcode: OpCodes.Callvirt, operand: typeof(Zone).GetMethod(  // callvirt        (call Zone.Evalue(int))
-                    name: "Evalue",
-                    types: new[] { typeof(int) })),
-                new CodeMatch(opcode: OpCodes.Ldc_I4_S, operand: (sbyte)10),              // ldc.i4.s 10     (push constant 10 — max allowed upgrades)
-                new CodeMatch(opcode: OpCodes.Clt),                                       // clt             (compare if Evalue < 10)
-            });
+namespace NoTentRestrictions;
 
-            if (codeMatcher.IsValid)
-            {
-                // Replace ldc.i4.s 10 with ldc.i4 int.MaxValue
-                codeMatcher.Advance(offset: 3); // Move to ldc.i4.s 10
-                codeMatcher.Set(opcode: OpCodes.Ldc_I4, operand: int.MaxValue);
-            }
-            
+internal static class TraitWrenchPatch
+{
+    private const int TentSoilElementId = 2200;
+    private const int VanillaTentSoilUpgradeLimit = 10;
+
+    internal static IEnumerable<CodeInstruction> IsValidTargetTranspiler(IEnumerable<CodeInstruction> instructions)
+    {
+        MethodInfo? evalue = AccessTools.Method(
+            type: typeof(Zone),
+            name: nameof(Zone.Evalue),
+            parameters: new[] { typeof(int) });
+        MethodInfo? getTentSoilUpgradeLimit = AccessTools.Method(
+            type: typeof(TraitWrenchPatch),
+            name: nameof(GetTentSoilUpgradeLimit));
+
+        if (evalue == null ||
+            getTentSoilUpgradeLimit == null)
+        {
+            NoTentRestrictions.LogError(message: "TraitWrench.IsValidTarget transpiler: required method lookup failed");
+            return instructions;
+        }
+
+        var codeMatcher = new CodeMatcher(instructions: instructions);
+
+        codeMatcher.MatchStartForward(matches: new[]
+        {
+            new CodeMatch(opcode: OpCodes.Ldc_I4, operand: TentSoilElementId),
+            new CodeMatch(predicate: instruction => CallsMethod(instruction: instruction, method: evalue)),
+            new CodeMatch(opcode: OpCodes.Ldc_I4_S, operand: (sbyte)VanillaTentSoilUpgradeLimit),
+            new CodeMatch(opcode: OpCodes.Clt)
+        });
+
+        if (codeMatcher.IsValid == false)
+        {
+            NoTentRestrictions.LogError(message: "TraitWrench.IsValidTarget transpiler: tent soil limit pattern not matched");
             return codeMatcher.Instructions();
         }
+
+        codeMatcher.Advance(offset: 2);
+        codeMatcher.SetInstruction(instruction: new CodeInstruction(opcode: OpCodes.Call, operand: getTentSoilUpgradeLimit));
+
+        return codeMatcher.Instructions();
+    }
+
+    private static int GetTentSoilUpgradeLimit()
+    {
+        if (NoTentRestrictionsConfig.EnableNoSoilUpgradeLimit.Value == false)
+        {
+            return VanillaTentSoilUpgradeLimit;
+        }
+
+        return int.MaxValue;
+    }
+
+    private static bool CallsMethod(CodeInstruction instruction, MethodInfo method)
+    {
+        return (instruction.opcode == OpCodes.Call || instruction.opcode == OpCodes.Callvirt) &&
+               Equals(objA: instruction.operand, objB: method);
     }
 }

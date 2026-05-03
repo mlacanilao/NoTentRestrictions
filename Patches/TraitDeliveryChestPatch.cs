@@ -1,25 +1,22 @@
-namespace NoTentRestrictions.Patches
+namespace NoTentRestrictions;
+
+internal static class TraitDeliveryChestPatch
 {
-    public static class TraitDeliveryChestPatch
+    internal static bool CanOpenContainerPrefix(TraitDeliveryChest __instance, ref bool __result)
     {
-        public static bool CanOpenContainerPrefix(TraitDeliveryChest __instance, ref bool __result)
+        if (ShouldAllowInstalledDeliveryBoxInTent(__instance: __instance) == false)
         {
-            bool enableDeliveryBox = NoTentRestrictionsConfig.EnableDeliveryBox?.Value ?? true;
-
-            if (enableDeliveryBox == false)
-            {
-                return true;
-            }
-            
-            if (EClass.core?.IsGameStarted == false ||
-                EClass._zone is Zone_Tent == false ||
-                __instance.owner?.IsInstalled == false)
-            {
-                return true;
-            }
-
-            __result = true;
-            return false;
+            return true;
         }
+
+        __result = true;
+        return false;
+    }
+
+    private static bool ShouldAllowInstalledDeliveryBoxInTent(TraitDeliveryChest __instance)
+    {
+        return TentContainerAccessUtility.ShouldAllowInstalledContainerInTent(
+            containerOwner: __instance.owner,
+            isEnabled: NoTentRestrictionsConfig.EnableDeliveryBox.Value);
     }
 }

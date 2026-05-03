@@ -1,18 +1,24 @@
-namespace NoTentRestrictions.Patches
+namespace NoTentRestrictions;
+
+internal static class TraitTentPatch
 {
-    public static class TraitTentPatch
+    internal static void CanBeDroppedPostfix(ref bool __result)
     {
-        public static bool CanBeDroppedPrefix(ref bool __result)
+        if (__result == true)
         {
-            bool enablePlaceTent = NoTentRestrictionsConfig.EnablePlaceTent?.Value ?? true;
-            
-            if (enablePlaceTent == false)
-            {
-                return true;
-            }
-            
-            __result = true;
-            return false;
+            return;
         }
+
+        if (NoTentRestrictionsConfig.EnablePlaceTent.Value == false)
+        {
+            return;
+        }
+
+        if (EClass._zone is Zone_Tent == false)
+        {
+            return;
+        }
+
+        __result = true;
     }
 }

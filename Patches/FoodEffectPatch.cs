@@ -3,39 +3,80 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace NoTentRestrictions.Patches
+namespace NoTentRestrictions;
+
+internal static class FoodEffectPatch
 {
-    public class FoodEffectPatch
+    internal static IEnumerable<CodeInstruction> ProcTranspiler(IEnumerable<CodeInstruction> instructions)
     {
-        internal static IEnumerable<CodeInstruction> ProcTranspiler(IEnumerable<CodeInstruction> instructions)
+        MethodInfo? getZoneGetter = AccessTools.PropertyGetter(
+            type: typeof(EClass),
+            name: "_zone");
+        MethodInfo? isPcFactionGetter = AccessTools.PropertyGetter(
+            type: typeof(Zone),
+            name: nameof(Zone.IsPCFaction));
+        MethodInfo? allowsDiningSpotBonusInZone = AccessTools.Method(
+            type: typeof(FoodEffectPatch),
+            name: nameof(AllowsDiningSpotBonusInZone));
+
+        if (getZoneGetter == null ||
+            isPcFactionGetter == null ||
+            allowsDiningSpotBonusInZone == null)
         {
-            bool enableDiningSpotSign = NoTentRestrictionsConfig.EnableDiningSpotSign?.Value ?? false;
-            
-            if (enableDiningSpotSign == false)
-            {
-                return instructions;
-            }
-            
-            var codeMatcher = new CodeMatcher(instructions: instructions);
-            
-            codeMatcher.MatchStartForward(matches: new[]
-            {
-                new CodeMatch(opcode: OpCodes.Call, operand: typeof(EClass).GetMethod(name: "get__zone", bindingAttr: BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)),
-                new CodeMatch(opcode: OpCodes.Callvirt, operand: typeof(Zone).GetProperty(name: "IsPCFaction").GetMethod),
-                new CodeMatch(predicate: i => i.opcode == OpCodes.Brfalse || i.opcode == OpCodes.Brfalse_S),
-            });
+            NoTentRestrictions.LogError(message: "FoodEffect.Proc transpiler: required method lookup failed");
+            return instructions;
+        }
 
-            if (codeMatcher.IsValid)
-            {
-                // overwrite call get__zone → ldc.i4.1
-                codeMatcher.Set(opcode: OpCodes.Ldc_I4_1, operand: null);
+        var codeMatcher = new CodeMatcher(instructions: instructions);
 
-                // overwrite callvirt get_IsPCFaction → nop
-                codeMatcher.Advance(offset: 1);
-                codeMatcher.Set(opcode: OpCodes.Nop, operand: null);
-            }
-            
+        codeMatcher.MatchStartForward(matches: new[]
+        {
+            new CodeMatch(predicate: instruction => CallsMethod(instruction: instruction, method: getZoneGetter)),
+            new CodeMatch(predicate: instruction => CallsMethod(instruction: instruction, method: isPcFactionGetter)),
+            new CodeMatch(predicate: instruction => instruction.opcode == OpCodes.Brfalse || instruction.opcode == OpCodes.Brfalse_S)
+        });
+
+        if (codeMatcher.IsValid == false)
+        {
+            NoTentRestrictions.LogError(message: "FoodEffect.Proc transpiler: dining spot faction pattern not matched");
             return codeMatcher.Instructions();
         }
+
+        codeMatcher.Advance(offset: 1);
+        codeMatcher.Instruction.opcode = OpCodes.Call;
+        codeMatcher.Instruction.operand = allowsDiningSpotBonusInZone;
+
+        return codeMatcher.Instructions();
+    }
+
+    private static bool AllowsDiningSpotBonusInZone(Zone zone)
+    {
+        if (zone == null)
+        {
+            return false;
+        }
+
+        if (zone.IsPCFaction == true)
+        {
+            return true;
+        }
+
+        if (NoTentRestrictionsConfig.EnableDiningSpotSign.Value == false)
+        {
+            return false;
+        }
+
+        if (zone is Zone_Tent == false)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool CallsMethod(CodeInstruction instruction, MethodInfo method)
+    {
+        return (instruction.opcode == OpCodes.Call || instruction.opcode == OpCodes.Callvirt) &&
+               Equals(objA: instruction.operand, objB: method);
     }
 }

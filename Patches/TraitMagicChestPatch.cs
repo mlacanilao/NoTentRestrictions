@@ -1,45 +1,33 @@
-namespace NoTentRestrictions.Patches
+namespace NoTentRestrictions;
+
+internal static class TraitMagicChestPatch
 {
-    public static class TraitMagicChestPatch
+    internal static bool CanOpenContainerPrefix(TraitMagicChest __instance, ref bool __result)
     {
-        public static bool CanOpenContainerPrefix(TraitMagicChest __instance, ref bool __result)
+        if (ShouldAllowInstalledMagicChestInTent(__instance: __instance) == false)
         {
-            bool enableStorageChest = NoTentRestrictionsConfig.EnableStorageChest?.Value ?? true;
-
-            if (enableStorageChest == false)
-            {
-                return true;
-            }
-            
-            if (EClass.core?.IsGameStarted == false ||
-                EClass._zone is Zone_Tent == false ||
-                __instance.owner?.IsInstalled == false)
-            {
-                return true;
-            }
-            
-            __result = true;
-            return false;
+            return true;
         }
-        
-        public static bool CanSearchContentPrefix(TraitMagicChest __instance, ref bool __result)
+
+        __result = true;
+        return false;
+    }
+
+    internal static bool CanSearchContentPrefix(TraitMagicChest __instance, ref bool __result)
+    {
+        if (ShouldAllowInstalledMagicChestInTent(__instance: __instance) == false)
         {
-            bool enableStorageChest = NoTentRestrictionsConfig.EnableStorageChest?.Value ?? true;
-
-            if (enableStorageChest == false)
-            {
-                return true;
-            }
-            
-            if (EClass.core?.IsGameStarted == false ||
-                EClass._zone is Zone_Tent == false ||
-                __instance.owner?.IsInstalled == false)
-            {
-                return true;
-            }
-            
-            __result = true;
-            return false;
+            return true;
         }
+
+        __result = true;
+        return false;
+    }
+
+    private static bool ShouldAllowInstalledMagicChestInTent(TraitMagicChest __instance)
+    {
+        return TentContainerAccessUtility.ShouldAllowInstalledContainerInTent(
+            containerOwner: __instance.owner,
+            isEnabled: NoTentRestrictionsConfig.EnableStorageChest.Value);
     }
 }

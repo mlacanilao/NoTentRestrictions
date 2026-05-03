@@ -43,15 +43,20 @@
         <vlayout id="vlayout02" border="true">
             <title>title02</title>
 
-            <toggle id="enableMaxFertilityToggle">
-                <contentId>toggle05</contentId>
-                <tooltip>tooltip05</tooltip>
-            </toggle>
-
-            <toggle id="enableNoSoilUpgradeLimitToggle">
-                <contentId>toggle06</contentId>
-                <tooltip>tooltip06</tooltip>
-            </toggle>
+            <t_group id="fertilityModeToggleGroup" min_count="1" max_count="1">
+                <choice>
+                    <contentId>fertilityModeVanilla</contentId>
+                    <tooltip>fertilityModeVanillaTooltip</tooltip>
+                </choice>
+                <choice>
+                    <contentId>toggle05</contentId>
+                    <tooltip>tooltip05</tooltip>
+                </choice>
+                <choice>
+                    <contentId>toggle06</contentId>
+                    <tooltip>tooltip06</tooltip>
+                </choice>
+            </t_group>
         </vlayout>
     </hlayout>
     

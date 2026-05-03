@@ -1,48 +1,47 @@
-namespace NoTentRestrictions.Patches
+namespace NoTentRestrictions;
+
+internal static class ZonePatch
 {
-    public static class ZonePatch
+    private const int MaxTentElectricity = 99999;
+
+    internal static bool BaseElectricityPrefix(Zone __instance, ref int __result)
     {
-        public static bool BaseElectricityPrefix(ref int __result)
+        if (NoTentRestrictionsConfig.EnableMaxElectricity.Value == false)
         {
-            bool enableMaxElectricity = NoTentRestrictionsConfig.EnableMaxElectricity?.Value ?? true;
-            
-            if (enableMaxElectricity == false)
-            {
-                return true;
-            }
-            
-            if (EClass.core?.IsGameStarted == false ||
-                EClass._zone is Zone_Tent == false)
-            {
-                return true;
-            }
-
-            __result = 99999;
-            return false;
+            return true;
         }
-        
-        public static bool AllowInvestPrefix(ref bool __result)
+
+        if (EClass.core?.IsGameStarted == false ||
+            __instance is Zone_Tent == false)
         {
-            if (EClass.core?.IsGameStarted == false ||
-                EClass._zone is Zone_Tent == false)
-            {
-                return true;
-            }
-
-            __result = true;
-            return false;
+            return true;
         }
-        
-        public static bool ShouldAutoRevivePrefix(ref bool __result)
+
+        __result = MaxTentElectricity;
+        return false;
+    }
+
+    internal static bool AllowInvestPrefix(Zone __instance, ref bool __result)
+    {
+        if (EClass.core?.IsGameStarted == false ||
+            __instance is Zone_Tent == false)
         {
-            if (EClass.core?.IsGameStarted == false ||
-                EClass._zone is Zone_Tent == false)
-            {
-                return true;
-            }
-
-            __result = true;
-            return false;
+            return true;
         }
+
+        __result = true;
+        return false;
+    }
+
+    internal static bool ShouldAutoRevivePrefix(Zone __instance, ref bool __result)
+    {
+        if (EClass.core?.IsGameStarted == false ||
+            __instance is Zone_Tent == false)
+        {
+            return true;
+        }
+
+        __result = true;
+        return false;
     }
 }

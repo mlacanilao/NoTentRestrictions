@@ -1,69 +1,87 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+using System;
+using System.Runtime.CompilerServices;
 using BepInEx;
 using HarmonyLib;
 
-namespace NoTentRestrictions
+namespace NoTentRestrictions;
+
+internal static class ModInfo
 {
-    internal static class ModInfo
+    internal const string Guid = "omegaplatinum.elin.notentrestrictions";
+    internal const string Name = "No Tent Restrictions";
+    internal const string Version = "3.0.0";
+    internal const string ModOptionsGuid = "evilmask.elinplugins.modoptions";
+}
+
+[BepInPlugin(GUID: ModInfo.Guid, Name: ModInfo.Name, Version: ModInfo.Version)]
+internal class NoTentRestrictions : BaseUnityPlugin
+{
+    internal static NoTentRestrictions? Instance { get; private set; }
+
+    private void Awake()
     {
-        internal const string Guid = "omegaplatinum.elin.notentrestrictions";
-        internal const string Name = "No Tent Restrictions";
-        internal const string Version = "2.4.0.0";
-        internal const string ModOptionsGuid = "evilmask.elinplugins.modoptions";
-        internal const string ModOptionsAssemblyName = "ModOptions";
+        Instance = this;
+        NoTentRestrictionsConfig.LoadConfig(config: Config);
+        Harmony.CreateAndPatchAll(type: typeof(Patcher), harmonyInstanceId: ModInfo.Guid);
+
+        if (HasModOptionsPlugin() == false)
+        {
+            return;
+        }
+
+        try
+        {
+            UIController.RegisterUI();
+        }
+        catch (Exception ex)
+        {
+            LogError(message: $"An error occurred during UI registration: {ex}");
+        }
     }
 
-    [BepInPlugin(GUID: ModInfo.Guid, Name: ModInfo.Name, Version: ModInfo.Version)]
-    internal class NoTentRestrictions : BaseUnityPlugin
+    internal static void Log(object payload)
     {
-        internal static NoTentRestrictions Instance { get; private set; }
-        
-        private void Start()
+        LogInfo(message: payload);
+    }
+
+    internal static void LogDebug(object message, [CallerMemberName] string caller = "")
+    {
+        Instance?.Logger.LogDebug(data: $"[{caller}] {message}");
+    }
+
+    internal static void LogInfo(object message)
+    {
+        Instance?.Logger.LogInfo(data: message);
+    }
+
+    internal static void LogError(object message)
+    {
+        Instance?.Logger.LogError(data: message);
+    }
+
+    private static bool HasModOptionsPlugin()
+    {
+        try
         {
-            Instance = this;
-            NoTentRestrictionsConfig.LoadConfig(config: Config);
-            Harmony.CreateAndPatchAll(type: typeof(Patcher), harmonyInstanceId: ModInfo.Guid);
-        }
-        
-        private void Awake()
-        {
-            if (IsModOptionsInstalled())
+            foreach (var obj in ModManager.ListPluginObject)
             {
-                try
+                if (obj is not BaseUnityPlugin plugin)
                 {
-                    UIController.RegisterUI();
+                    continue;
                 }
-                catch (Exception ex)
+
+                if (plugin.Info.Metadata.GUID == ModInfo.ModOptionsGuid)
                 {
-                    Log(payload: $"An error occurred during UI registration: {ex.Message}");
+                    return true;
                 }
             }
-            else
-            {
-                Log(payload: "Mod Options is not installed. Skipping UI registration.");
-            }
+
+            return false;
         }
-        
-        internal static void Log(object payload)
+        catch (Exception ex)
         {
-            Instance.Logger.LogInfo(data: payload);
-        }
-        
-        private bool IsModOptionsInstalled()
-        {
-            try
-            {
-                return AppDomain.CurrentDomain
-                    .GetAssemblies()
-                    .Any(predicate: (Assembly assembly) => assembly.GetName().Name == ModInfo.ModOptionsAssemblyName);
-            }
-            catch (Exception ex)
-            {
-                Log(payload: $"Error while checking for Mod Options: {ex.Message}");
-                return false;
-            }
+            LogError(message: $"Error while checking for Mod Options: {ex}");
+            return false;
         }
     }
 }
