@@ -54,6 +54,13 @@ internal static class Patcher
         TraitTentPatch.CanBeDroppedPostfix(__result: ref __result);
     }
 
+    [HarmonyPostfix]
+    [HarmonyPatch(declaringType: typeof(Thing), methodName: nameof(Thing.SelfWeight), methodType: MethodType.Getter)]
+    internal static void ThingSelfWeight(Thing __instance, ref int __result)
+    {
+        ThingPatch.SelfWeightPostfix(__instance: __instance, __result: ref __result);
+    }
+
     [HarmonyPrefix]
     [HarmonyPatch(declaringType: typeof(TraitDeliveryChest), methodName: nameof(TraitDeliveryChest.CanOpenContainer), methodType: MethodType.Getter)]
     internal static bool TraitDeliveryChestCanOpenContainer(TraitDeliveryChest __instance, ref bool __result)

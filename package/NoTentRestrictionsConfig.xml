@@ -9,6 +9,11 @@
                 <tooltip>tooltip01</tooltip>
             </toggle>
 
+            <toggle id="enableWeightlessTentsToggle">
+                <contentId>toggle10</contentId>
+                <tooltip>tooltip14</tooltip>
+            </toggle>
+
             <toggle id="enableStorageChestToggle">
                 <contentId>toggle02</contentId>
                 <tooltip>tooltip02</tooltip>

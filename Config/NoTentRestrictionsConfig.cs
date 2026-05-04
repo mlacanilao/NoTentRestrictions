@@ -6,6 +6,7 @@ namespace NoTentRestrictions;
 internal static class NoTentRestrictionsConfig
 {
     internal static ConfigEntry<bool> EnablePlaceTent = null!;
+    internal static ConfigEntry<bool> EnableWeightlessTents = null!;
     internal static ConfigEntry<bool> EnableStorageChest = null!;
     internal static ConfigEntry<bool> EnableDeliveryBox = null!;
     internal static ConfigEntry<bool> EnableShippingChest = null!;
@@ -136,6 +137,23 @@ internal static class NoTentRestrictionsConfig
             "启用或禁用帐篷内的食堂招牌效果。\n" +
             "设置为 'true' 在帐篷内也应用加成，设置为 'false' 保持原版行为。"
         );
+        
+        EnableWeightlessTents = config.Bind(
+            section: ModInfo.Name,
+            key: "Enable Weightless Tents",
+            defaultValue: false,
+            description:
+            "Enable or disable making carried tent items weightless.\n" +
+            "Set to 'true' to make tent items weightless, or 'false' to keep vanilla weight.\n" +
+            "テントアイテムを無重量にする機能を有効または無効にします。\n" +
+            "'true' に設定するとテントアイテムが無重量になり、'false' に設定するとバニラの重量のままになります。\n" +
+            "启用或禁用让携带的帐篷物品变为无重量。\n" +
+            "设置为 'true' 可使帐篷物品无重量，设置为 'false' 保持原版重量。"
+        );
+        EnableWeightlessTents.SettingChanged += (_, _) =>
+        {
+            ThingPatch.RefreshWeightlessTentWeightCache();
+        };
     }
 
     internal static void InitializeXmlPath(string xmlPath)

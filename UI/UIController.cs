@@ -59,6 +59,9 @@ internal static class UIController
                 toggle: GetRequiredPreBuild<OptToggle>(builder: builder, id: "enablePlaceTentToggle"),
                 configEntry: NoTentRestrictionsConfig.EnablePlaceTent);
             BindConfigToggle(
+                toggle: GetRequiredPreBuild<OptToggle>(builder: builder, id: "enableWeightlessTentsToggle"),
+                configEntry: NoTentRestrictionsConfig.EnableWeightlessTents);
+            BindConfigToggle(
                 toggle: GetRequiredPreBuild<OptToggle>(builder: builder, id: "enableStorageChestToggle"),
                 configEntry: NoTentRestrictionsConfig.EnableStorageChest);
             BindConfigToggle(
